@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Eggs Clicker</title>
+	<script src="javascript/jquery.min.js"></script>
+	<script src="javascript/jquery-ui.min.js"></script>
+	<script src="javascript/jquery.animateSprite.js"></script>
+	<script src="javascript/jquery.imageloader.min.js"></script>
+	<script src="javascript/eggsClicker.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/jquery.mCustomScrollbar.css" />
+	<link rel="stylesheet" type="text/css" href="css/eggClicker.css" />	
+</head>
+<body>
+	<div id="X"></div>
+	<img id="Z" src=''></div>
+	<div id="modal">
+		<div id="popup">
+			<div id="popup-header"></div>
+			<div id="popup-content"></div>
+		</div>
+	</div>
+	<div id="magicEgg"></div>
+	<div id="magicEggClick" onClick="javascript: clickOnMagic();"></div>
+
+	<!-- PANNEAUX DU HAUT -->
+	<div id="TE" class="pannel" style="width: auto;min-width: 185px;left: 355px;">
+		<div class="pannelImage pannelSmallEggs"></div><div id="pannelEggs" class="pannelRes"></div>
+	</div>
+
+	<div id="TM" class="pannel" style="width: auto;min-width: 155px;left: 560px;">
+		<div class="pannelImage pannelSmallMoney"></div><div id="pannelMoney" class="pannelRes"></div>
+	</div>
+
+	<div id="TGE" class="pannel" style="width: auto;min-width: 85px;left: 740px;display: none;">
+		<div class="pannelImage pannelSmallGoldEggs"></div><div id="pannelGoldEggs" class="pannelRes"></div>
+	</div>
+
+	<div id="TME" class="pannel" style="width: auto;min-width: 75px;left: 850px;display: none;">
+		<div class="pannelImage pannelSmallMagicEggs"></div><div id="pannelMagicEggs" class="pannelRes"></div>
+	</div>
+
+	<div style="position: absolute;height: 90%;min-height: 630px;left: 2.5%;top: 5%;width: 95%;display: table;">
+		<div style="display: table-row;height: 100%;">
+			<div style="width: 320px;min-width: 320px;max-width: 320px;display: table-cell;height: 100%;">
+				<!-- PANNEAU DE GAUCHE -->
+				<div style="width: 100%;height: 100%;">
+					<div style="width: 100%;height: 100px;"></div>
+					<!-- OEUF -->
+					<div id="aura"></div>
+					<div class="notDraggable" onClick="javascript: clickEgg();" style="width: 320px;height: 200px;margin-top: 20px;cursor: pointer;z-index: 10;">
+						<div style="position:absolute;width: 320px;height: 200px;background-image: url('images/egg.png');background-position: center;background-repeat: no-repeat;"></div>
+					</div>
+					<!-- LOGO -->
+					<div style="background-image: url('images/logo.png');background-position: center;background-repeat: no-repeat;height: 100px;width: 320px;position: absolute;top: 0px;"></div>
+					<!-- BOUTONS -->
+					<div style="width: 100%;height: 150px;margin-top: 20px;">
+						<div id="sell" class="bouton buttonON" onClick="javascript: doSell();" style="margin-top: 20px;">Vendre les &oelig;ufs</div>
+						<div id="sellLoading"><div id="sellLoagingInside"></div></div>
+						<div id="BB" style="display: none;">
+							<div id="booster" class="bouton buttonON" onClick="javascript: doMagic();" style="margin-top: 100px;">Activer le boost</div>
+							<div id="boostLoading"><div id="boostLoagingInside"></div></div>
+						</div>
+					</div>
+					<div id="infosPannel">
+						<div id="portraitHero" class="notDraggable"></div>
+						<span class="toprightinfos" style="top: 15px;letter-spacing: 1.5px;"><i id="info-name"></i></span>
+						<span class="toprightinfos" style="top: 35px;color: #FDEE92;font-style: italic;font-weight: normal;font-size: 13px;"><i id="info-class"></i></span>
+						<span class="toprightinfos" style="top: 55px;color: #FFE4C6;font-style: italic;font-weight: normal;font-size: 12px;">Niveau <i id="info-level"></i></span>
+						<div style="margin-top: 60px;margin-bottom: 15px;padding-bottom: 15px;border-bottom: 1px solid #231D15;">
+							<img class="infomini" src="images/info_heart.png" /><b>HP :</b> <i id="info-hp"></i> / <i id="info-hp-max"></i><br />
+							<img class="infomini" src="images/info_sword.png" /><b>D&eacute;gats :</b> <i id="info-dmg"></i><br />
+							<img class="infomini" src="images/info_magie.png" /><b>Magie :</b> <i id="info-magie"></i><br />
+							<img class="infomini" src="images/info_stock.png" /><b>Stock max :</b> <i id="info-stock-max"></i><br />
+							<img class="infomini" src="images/info_gold.png" /><b>Vente max :</b> <i id="info-vente-max"></i><br />
+						</div>
+						&OElig;ufs / sec : <span id="eggsbysec"></span><br />
+						Prix de l'&oelig;uf : <span id="eggsprice"></span><br />
+						Gain du clic : <span id="clicgain"></span><br />
+						Nombre d'auto clic : <span id="autoclic"></span><br />
+						Duree du boost : <span id="boosttime"></span><br />
+						Gain du boost : <span id="boostmult"></span><br />
+						&OElig;ufs d'or / sec : <span id="goldeggbysec"></span><br />
+						Rechargement vente : <span id="selldelay"></span><br />
+						R&eacute;g&eacute;n&eacute;ration des HP : <span id="hpregen"></span><br />
+						Multiplicateur clic h&eacute;ro : <span id="heroclicquot"></span><br />
+						Niveau du h&eacute;ro : <span id="herolevel"></span><br />
+						Arme actuelle : <span id="heroweapon"></span><br />
+						Armure actuelle : <span id="heroarmor"></span><br />
+						Vague d'ennemis actuel : <span id="ennemywave"></span><br />
+						Prochain ennemi : <span id="nextennemy"></span><br />
+						Stock maximum : <span id="stockmaxi"></span><br />
+						&OElig;ufs / vente (max.) : <span id="sellmaxi"></span><br />
+						Temps de jeu : <span id="playtime">0 min</span><br />
+						Taille de la carte : <span id="mapsize"></span><br />
+						<br />
+					</div>
+				</div>
+			</div>
+			<div style="width: auto;display: table-cell;height: 100%;">
+				<!-- PANNEAU DU MILIEU -->
+				<div id="midPannel">
+					<div id="map">
+						<div id="ml-0" class="mapLine block-top-center"></div>
+
+						<div id="ml-1" class="mapLine block-center-center" style="background-image: url('images/environment/environment1-block.png');"></div>
+						<div id="ml-2" class="mapLine block-center-center" style="background-image: url('images/environment/environment1-block.png');"></div>
+						<div id="ml-3" class="mapLine block-center-center" style="background-image: url('images/environment/environment1-block.png');"></div>
+						<div id="ml-4" class="mapLine block-center-center" style="background-image: url('images/environment/environment1-block.png');"></div>
+						<div id="ml-5" class="mapLine block-center-center" style="background-image: url('images/environment/environment1-block.png');"></div>
+						<div id="ml-6" class="mapLine block-center-center" style="background-image: url('images/environment/environment1-block.png');"></div>
+						<div id="ml-7" class="mapLine block-center-center" style="background-image: url('images/environment/environment1-block.png');"></div>
+						<div id="ml-8" class="mapLine block-center-center" style="background-image: url('images/environment/environment1-block.png');"></div>
+						<div id="ml-9" class="mapLine block-center-center" style="background-image: url('images/environment/environment1-block.png');"></div>
+						<div id="ml-10" class="mapLine block-center-center" style="background-image: url('images/environment/environment1-block.png');"></div>
+
+						<div id="ml-11" class="mapLine block-bottom-center"></div>
+					</div>
+				</div>
+			</div>
+			<div class="ConfigSocialBar">
+				<div id="buttonFacebook" class="buttonLittle buttonFacebook"></div>
+				<div id="buttonTwitter" class="buttonLittle buttonTwitter"></div>
+				<div id="buttonVideo" class="buttonLittle buttonPause" onClick="javascript: switchVideo();"></div>
+				<div id="buttonFreeze" class="buttonLittle buttonFreeze" onClick="javascript: doPause();"></div>
+				<div id="slider"></div>
+			</div>
+			<div style="width: 300px;min-width: 300px;max-width: 300px;height: 100%;display: table-cell;">
+				<div id="ennemiTimer" class="ennemiTimerHide">
+					<div id="ennemiTimerInside">
+
+					</div>
+				</div>
+				<!-- PANNEAU DE DROITE -->
+				<div style="width: 100%;height: 100%;">
+					<div style="position: absolute;width: 300px;height: 40px;display: table;border-collapse:separate;border-spacing:10px 0;">
+						<div style="display: table-row;">
+							<!-- LES ONGLETS -->
+							<div id="onglet-shop-pets" class="onglet ongletON"  onClick="javascript: displayOnglet('shop-pets');">
+								<div class="onglet-image image-shop-pets"></div>
+							</div>
+							<div id="onglet-shop-build" class="onglet ongletOFF" onClick="javascript: displayOnglet('shop-build');">
+								<div class="onglet-image image-shop-build"></div>
+							</div>
+							<div id="onglet-shop-upgrade" class="onglet ongletOFF" onClick="javascript: displayOnglet('shop-upgrade');">
+								<div class="onglet-image image-shop-upgrade"></div>
+							</div>
+						</div>
+					</div>
+					<div id="shop">
+						<!-- LA BOUTIQUE -->
+						<ul id="shop-pets"></ul>
+						<ul id="shop-build" style="display: none;"></ul>
+						<ul id="shop-upgrade" style="display: none;">
+							<!-- LA CARTE -->
+							<li id='uli-area' class='buyOFF'><div class="portrait notDraggable" style="background-image: url('images/shop/BIG_MapWorld.png');"></div><span class="shop-name" style="margin-top: -50px;">Agrandir la carte</span><span class="shop-bonus"><div class="buttonQuickBuy" onClick="javascript: doBuyAddBlock();">Acheter</div></span><span class="shop-prix" style="margin-top: 10px;"><i>Prix: </i><span id='prix-area'></span><div class='verysmalldollar'></div></span><span class="shop-desc" style="margin-top: 30px;">Il parait que l'&icirc;le est d'une taille infinie. Est-ce vrais ?</span></li>
+
+							<!-- LA POTION DE SOINS -->
+							<li id='uli-potion' class='buyOFF'><div class="portrait notDraggable" style="background-image: url('images/shop/BIG_RedPotion.png');"></div><span class="shop-name" style="margin-top: -50px;">R&eacute;cup&eacute;rer 10% des HP</span><span class="shop-bonus"><div class="buttonQuickBuy" onClick="javascript: doBuyRedPotion();">Acheter</div></span><span class="shop-prix" style="margin-top: 10px;"><i>Prix: </i><span id='prix-potion'></span><div class='verysmalldollar'></div></span><span class="shop-desc" style="margin-top: 30px;">Cet elixir rare permet de soigner de n'importe quelle blessure.</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="combatWindow">
+		<div style="position: absolute;height: 640px;left: 10px;top: 45px;width: 980px;display: table;">
+			<div style="display: table-row;">
+				<div style="display: table-cell;height: 320px;">
+					<div style="width: 640px;height: 320px;display: inline-block;background-repeat: no-repeat;background-position: center center;">
+						<div id="enemybg" style="width: 640px;height: 320px;-webkit-border-radius: 20px;-moz-border-radius: 20px;border-radius: 20px;border: 2px solid #3A1F0B;">
+							<div id="combat-bigenemy" style="width: 640px;height: 320px;position: absolute;background-position: center center;background-repeat: no-repeat;"></div>
+						</div>
+					</div>
+					<div style="position: absolute; height: 315px;left: 660px;width: 310px;top: 5px;color: #634628;">
+						<h1 id="enemyName"></h1>
+
+						<div class="healthbar"><div id="HBI_Enemy" class="healthbarInside"></div>
+						<img class="infomini" src="images/info_heart.png" style="margin-top: 10px;" /><b>HP :</b> <i id="c_info-hp-ennemy"></i> / <i id="c_info-hp-max-ennemy"></i><br />
+						<div class="combat-bar"></div>
+						<img class="infomini" src="images/info_sword.png" /><b>D&eacute;gats :</b> <i id="c_info-dmg-ennemy"></i><br />
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="display: table-row;">
+			<div id="combat-information"></div>
+			<div id="buttonEndCombat" class="bouton buttonOFF" onClick="javascript: doEndCombat();" style="margin: auto;top: 355px;margin-left: 710px;">Terminer</div>
+		</div>
+		<div style="display: table-row;">
+			<div style="display: table-cell;height: 220px;">
+
+				<div id="combat-spell4" class="bouton buttonOFF" onClick="javascript: doIce();" style="margin: auto;margin-top: 20px;margin-left: 10px;">Prison de glace<div class="littleprice"><div class='verysmallmagie'></div>x 1</div></div>
+				<div id="combat-spell5" class="bouton buttonOFF" onClick="javascript: doHeal();" style="margin: auto;margin-top: 80px;margin-left: 10px;">Gu&eacute;rison<div class="littleprice"><div class='verysmallmagie'></div>x 2</div></div>
+				<div id="combat-spell6" class="bouton buttonOFF" onClick="javascript: doDivine();" style="margin: auto;margin-top: 140px;margin-left: 10px;">Br&ucirc;lure divine<div class="littleprice"><div class='verysmallmagie'></div>x 3</div></div>
+				<div id="combat-spell1" class="bouton buttonOFF" onClick="javascript: doAttaqueHero();" style="margin: auto;margin-top: 20px;margin-left: 430px;">Attaquer</div>
+				<div id="combat-spell2" class="bouton buttonOFF" onClick="javascript: doSteal();" style="margin: auto;margin-top: 80px;margin-left: 430px;">Voler</div>
+				<div id="combat-spell3" class="bouton buttonOFF" onClick="javascript: doLeak(1);" style="margin: auto;margin-top: 140px;margin-left: 430px;">Fuir</div>
+
+				<div id="combat-bighero"></div>
+
+			</div>
+			<div style="position: absolute; height: 205px;left: 660px;width: 310px;top: 440px;color: #634628;">
+				<h1 id="c_heroName"></h1>
+				<div class="healthbar"><div id="HBI_Hero" class="healthbarInside"></div></div>
+				<img class="infomini" src="images/info_heart.png" /><b>HP :</b> <i id="c_info-hp"></i> / <i id="c_info-hp-max"></i><br />
+				<div class="combat-bar"></div>
+				<img class="infomini" src="images/info_sword.png" /><b>D&eacute;gats :</b> <i id="c_info-dmg"></i><br />
+				<img class="infomini" src="images/info_magie.png" /><b>Magie :</b> <i id="c_info-magie"></i><br />
+				<img class="infomini" src="images/info_magicegg.png" /><b>&OElig;uf(s) magiques :</b> <i id="c_info-magicegg"></i><br />
+				<img class="infomini" src="images/info_class.gif" /><b>Classe :</b> <i id="c_info-class"></i><br />
+				<img class="infomini" src="images/info_level.gif" /><b>Niveau actuel :</b> <i id="c_info-level"></i><br />
+			</div>
+		</div>
+	</div>
+
+	<div id="paused" style="display: none;">
+		<div class="bouton buttonON" onClick="javascript: doUnPause();" style="margin-top: 30px;margin-left: 72px;">Reprendre</div>
+	</div>
+
+	<div id="heroSelect" style="display: none;">
+		<h1 style="text-align: center;top: 70px;font-size: 30px;position: absolute;width: 100%;">
+			Choisissez votre h&eacute;ro
+		</h1>
+		<div id="FACE_hero1" class="heroCaseFace"  onClick="javascript: selectHero(1);"></div>
+		<div id="FACE_hero2" class="heroCaseFace"  onClick="javascript: selectHero(2);"></div>
+		<div id="FACE_hero3" class="heroCaseFace"  onClick="javascript: selectHero(3);"></div>
+		<div id="FACE_hero4" class="heroCaseFace"  onClick="javascript: selectHero(4);"></div>
+		<div id="FACE_hero5" class="heroCaseFace"  onClick="javascript: selectHero(5);"></div>
+		<div id="FACE_hero6" class="heroCaseFace"  onClick="javascript: selectHero(6);"></div>
+		<div id="FACE_hero7" class="heroCaseFace"  onClick="javascript: selectHero(7);"></div>
+		<div id="FACE_hero8" class="heroCaseFace"  onClick="javascript: selectHero(8);"></div>
+		<div id="FACE_hero9" class="heroCaseFace"  onClick="javascript: selectHero(9);"></div>
+		<div id="FACE_hero10" class="heroCaseFace" onClick="javascript: selectHero(10);"></div>
+		<div id="FACE_hero11" class="heroCaseFace" onClick="javascript: selectHero(11);"></div>
+		<div id="FACE_hero12" class="heroCaseFace" onClick="javascript: selectHero(12);"></div>
+		<div id="FACE_hero13" class="heroCaseFace" onClick="javascript: selectHero(13);"></div>
+		<div id="FACE_hero14" class="heroCaseFace" onClick="javascript: selectHero(14);"></div>
+		<div id="FACE_hero15" class="heroCaseFace" onClick="javascript: selectHero(15);"></div>
+		<div id="FACE_hero16" class="heroCaseFace" onClick="javascript: selectHero(16);"></div>
+		<div id="FACE_hero17" class="heroCaseFace" onClick="javascript: selectHero(17);"></div>
+		<div id="FACE_hero18" class="heroCaseFace" onClick="javascript: selectHero(18);"></div>
+		<div id="FACE_hero19" class="heroCaseFace" onClick="javascript: selectHero(19);"></div>
+		<div id="FACE_hero20" class="heroCaseFace" onClick="javascript: selectHero(20);"></div>
+
+		<div id="heroCaseBig"></div>
+
+		<div id="heroInfo">
+			<h2>Nom du joueur : </h2><input id="heroName" type="text" placeholder="Votre pseudo" maxlength="22" onKeyUp="javascript: checkName();" autofocus /><br />
+			<h2>Classe :</h2><i id="selectHeroClass">Paladin</i><br />
+			<h2>Bonus :</h2><i id="selectHeroBonus">Le paladin a une bonne classe d'armure !</i><br />
+			<h2>Description :</h2><br />
+			<div id="heroDescription">
+				Le paladin a une bonne classe d'armure !Le paladin a une bonne classe d'armure !Le paladin a une bonne classe d'armure !Le paladin a une bonne classe d'armure !Le paladin a une bonne classe d'armure !
+			</div>
+		</div>
+		<div id="buttonOkHero" onClick="javascript: validHero();" class="bouton buttonOFF" style="position: absolute;top: 0px;margin-top: 560px;left: 285px;">Ok !</div>
+	</div>
+
+</body>
+</html>
